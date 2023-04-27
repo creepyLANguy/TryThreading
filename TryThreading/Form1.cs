@@ -51,7 +51,7 @@ namespace TryThreading
       var watch = new System.Diagnostics.Stopwatch();
       watch.Start();
 
-      PerformUpdates_Normal();
+      PerformUpdates_Threaded();
 
       watch.Stop();
       Cursor.Current = DefaultCursor;
