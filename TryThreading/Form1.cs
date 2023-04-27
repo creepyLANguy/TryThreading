@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,24 +11,22 @@ namespace TryThreading
 {
   public partial class Form1 : Form
   {
-    Dictionary<Color, Color> maps = new Dictionary<Color, Color>();
-
-    int uiLagTime = 1000;
+    static readonly Color TrueGreen = Color.FromArgb(0, 255, 0);
+    readonly Dictionary<Color, Color> maps = new Dictionary<Color, Color>() 
+    {
+      { Color.Red,      TrueGreen     },
+      { TrueGreen,      Color.Blue    },
+      { Color.Blue,     Color.Red     },
+      { Color.Cyan,     Color.Magenta },
+      { Color.Magenta,  Color.Yellow  },
+      { Color.Yellow,   Color.Cyan    },
+      { Color.Black,    Color.White   },
+      { Color.White,    Color.Black   }
+    };
 
     public Form1()
     {
       InitializeComponent();
-      
-      var TrueGreen = Color.FromArgb(0, 255, 0);
-
-      maps.Add(Color.Red, TrueGreen);
-      maps.Add(TrueGreen, Color.Blue);
-      maps.Add(Color.Blue, Color.Red);
-      maps.Add(Color.Cyan, Color.Magenta);
-      maps.Add(Color.Magenta, Color.Yellow);
-      maps.Add(Color.Yellow, Color.Cyan);
-      maps.Add(Color.Black, Color.White);
-      maps.Add(Color.White, Color.Black);
     }
 
     private void btn_normal_Click(object sender, EventArgs e)
@@ -60,7 +56,7 @@ namespace TryThreading
       watch.Stop();
       Cursor.Current = DefaultCursor;
 
-      lbl_executionTime_threaded_value.Text = "NOT IMPLEMENTED";//watch.ElapsedMilliseconds.ToString();
+      lbl_executionTime_threaded_value.Text = watch.ElapsedMilliseconds + " ms";
     }
 
     private void PerformUpdates_Normal()
@@ -88,7 +84,6 @@ namespace TryThreading
             }            
           }
         }
-
 
         ++counter;
         var percent = (int)(((double)counter / maps.Count) * 100);
