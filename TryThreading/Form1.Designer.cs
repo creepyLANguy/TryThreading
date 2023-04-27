@@ -36,6 +36,7 @@
       this.lbl_lastExecution_threaded = new System.Windows.Forms.Label();
       this.lbl_executionTime_normal_value = new System.Windows.Forms.Label();
       this.lbl_executionTime_threaded_value = new System.Windows.Forms.Label();
+      this.btn_reset = new System.Windows.Forms.Button();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
       this.SuspendLayout();
       // 
@@ -132,11 +133,23 @@
       this.lbl_executionTime_threaded_value.TabIndex = 6;
       this.lbl_executionTime_threaded_value.Text = "-";
       // 
+      // btn_reset
+      // 
+      this.btn_reset.Font = new System.Drawing.Font("Microsoft Sans Serif", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.btn_reset.Location = new System.Drawing.Point(730, 530);
+      this.btn_reset.Name = "btn_reset";
+      this.btn_reset.Size = new System.Drawing.Size(80, 80);
+      this.btn_reset.TabIndex = 7;
+      this.btn_reset.Text = "🔄";
+      this.btn_reset.UseVisualStyleBackColor = false;
+      this.btn_reset.Click += new System.EventHandler(this.btn_reset_Click);
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(822, 899);
+      this.Controls.Add(this.btn_reset);
       this.Controls.Add(this.lbl_executionTime_threaded_value);
       this.Controls.Add(this.lbl_executionTime_normal_value);
       this.Controls.Add(this.lbl_lastExecution_threaded);
@@ -164,6 +177,7 @@
     private System.Windows.Forms.Label lbl_lastExecution_threaded;
     private System.Windows.Forms.Label lbl_executionTime_normal_value;
     private System.Windows.Forms.Label lbl_executionTime_threaded_value;
+    private System.Windows.Forms.Button btn_reset;
   }
 }
 

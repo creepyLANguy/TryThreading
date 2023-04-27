@@ -11,6 +11,8 @@ namespace TryThreading
 {
   public partial class Form1 : Form
   {
+    static Bitmap cachedImage = null;
+
     static readonly Color TrueGreen = Color.FromArgb(0, 255, 0);
     readonly Dictionary<Color, Color> maps = new Dictionary<Color, Color>() 
     {
@@ -27,6 +29,19 @@ namespace TryThreading
     public Form1()
     {
       InitializeComponent();
+      cachedImage = new Bitmap(pictureBox1.Image);
+    }
+
+    private void btn_reset_Click(object sender, EventArgs e)
+    {
+      if (cachedImage != null)
+      {
+        pictureBox1.Image = cachedImage;
+      }
+      else
+      {
+        MessageBox.Show("Could not reset image.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
     }
 
     private void btn_normal_Click(object sender, EventArgs e)
@@ -67,23 +82,7 @@ namespace TryThreading
       var counter = 0;
       foreach (var map in maps) 
       {
-        for(int x = 0; x < buffer.Width; x++)
-        {
-          for(int y = 0; y < buffer.Height; y++)
-          {
-            var px = original.GetPixel(x, y);
-            if ((px.R != map.Key.R) || 
-                (px.G != map.Key.G) ||
-                (px.B != map.Key.B)) 
-            {
-              continue;
-            }
-            else
-            {
-              buffer.SetPixel(x, y, map.Value);
-            }            
-          }
-        }
+        buffer = UpdateBuffer(original, buffer, map);        
 
         ++counter;
         var percent = (int)(((double)counter / maps.Count) * 100);
@@ -92,12 +91,36 @@ namespace TryThreading
       }
 
       pictureBox1.Image = buffer;
-    }    
-    
+    }
+
+    private Bitmap UpdateBuffer(Bitmap original, Bitmap buffer, KeyValuePair<Color, Color> map)
+    {
+      for (int x = 0; x < buffer.Width; x++)
+      {
+        for (int y = 0; y < buffer.Height; y++)
+        {
+          var px = original.GetPixel(x, y);
+          if ((px.R != map.Key.R) ||
+              (px.G != map.Key.G) ||
+              (px.B != map.Key.B))
+          {
+            continue;
+          }
+          else
+          {
+            buffer.SetPixel(x, y, map.Value);
+          }
+        }
+      }
+
+      return buffer;
+    }
+
     private void PerformUpdates_Threaded()
     {
       //AL.
       //TODO
+
     }
   }
 }
