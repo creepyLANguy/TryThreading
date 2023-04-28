@@ -126,8 +126,8 @@ namespace TryThreading
 
         ++counter;
         var percent = (int)(((double)counter / maps.Count) * 100);
-        lbl_executionTime_normal_value.Text = percent + "%";
-        lbl_executionTime_normal_value.Refresh();
+        lbl_executionTime_threaded_value.Text = percent + "%";
+        lbl_executionTime_threaded_value.Refresh();
       }
       
       foreach (var result in repaintedBuffers)
