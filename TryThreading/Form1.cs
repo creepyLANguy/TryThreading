@@ -22,6 +22,8 @@ namespace TryThreading
       { Color.White,    Color.Black   }
     };
 
+    static List<Bitmap> repaintedBuffers = new List<Bitmap>();
+
     public Form1()
     {
       InitializeComponent();
@@ -115,14 +117,12 @@ namespace TryThreading
       //AL.
       //TODO - actually make this threaded. 
 
-      var original = new Bitmap(pictureBox1.Image);
-
-      var results = new List<Bitmap>();
+      var original = new Bitmap(pictureBox1.Image);     
 
       var counter = 0;
       foreach (var map in maps)
       {
-        results.Add(GetRepaintedBuffer(original, 0, original.Height, map.Key, map.Value));
+        GenerateRepaintedBuffer(original, 0, original.Height, map.Key, map.Value);
 
         ++counter;
         var percent = (int)(((double)counter / maps.Count) * 100);
@@ -130,7 +130,7 @@ namespace TryThreading
         lbl_executionTime_normal_value.Refresh();
       }
       
-      foreach (var result in results)
+      foreach (var result in repaintedBuffers)
       {
         using(var g = Graphics.FromImage(original))
         {
@@ -141,7 +141,7 @@ namespace TryThreading
       pictureBox1.Image = original;
     }
 
-    public static Bitmap GetRepaintedBuffer(Bitmap buffer, int startY, int endY, Color oldColor, Color newColor)
+    public static void GenerateRepaintedBuffer(Bitmap buffer, int startY, int endY, Color oldColor, Color newColor)
     {
       var width = buffer.Width;
       var height = buffer.Height;
@@ -163,7 +163,8 @@ namespace TryThreading
           }
         }
       }
-      return repainted;
+
+      repaintedBuffers.Add(repainted);
     }
   }
 }
