@@ -98,8 +98,6 @@ namespace TryThreading
     {
       List<Task> tasks = new List<Task>();
 
-      //AL.
-      //TODO - once threading is working, find a way to indicate progress. 
       foreach (var map in maps)
       {
         tasks.Add(Task.Run(() => GenerateRepaintedBuffer(map.Key, map.Value)));
