@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TryThreading
@@ -14,7 +10,7 @@ namespace TryThreading
     static Bitmap cachedImage = null;
 
     static readonly Color TrueGreen = Color.FromArgb(0, 255, 0);
-    readonly Dictionary<Color, Color> maps = new Dictionary<Color, Color>() 
+    readonly Dictionary<Color, Color> maps = new Dictionary<Color, Color>()
     {
       { Color.Red,      TrueGreen     },
       { TrueGreen,      Color.Blue    },
@@ -80,9 +76,9 @@ namespace TryThreading
       var buffer = new Bitmap(pictureBox1.Image);
 
       var counter = 0;
-      foreach (var map in maps) 
+      foreach (var map in maps)
       {
-        buffer = UpdateBuffer(original, buffer, map);        
+        UpdateBuffer(original, ref buffer, map);
 
         ++counter;
         var percent = (int)(((double)counter / maps.Count) * 100);
@@ -93,11 +89,11 @@ namespace TryThreading
       pictureBox1.Image = buffer;
     }
 
-    private Bitmap UpdateBuffer(Bitmap original, Bitmap buffer, KeyValuePair<Color, Color> map)
+    private void UpdateBuffer(Bitmap original, ref Bitmap buffer, KeyValuePair<Color, Color> map)
     {
-      for (int x = 0; x < buffer.Width; x++)
+      for (var x = 0; x < buffer.Width; x++)
       {
-        for (int y = 0; y < buffer.Height; y++)
+        for (var y = 0; y < buffer.Height; y++)
         {
           var px = original.GetPixel(x, y);
           if ((px.R != map.Key.R) ||
@@ -112,15 +108,62 @@ namespace TryThreading
           }
         }
       }
-
-      return buffer;
     }
 
     private void PerformUpdates_Threaded()
     {
       //AL.
-      //TODO
+      //TODO - actually make this threaded. 
 
+      var original = new Bitmap(pictureBox1.Image);
+
+      var results = new List<Bitmap>();
+
+      var counter = 0;
+      foreach (var map in maps)
+      {
+        results.Add(GetRepaintedBuffer(original, 0, original.Height, map.Key, map.Value));
+
+        ++counter;
+        var percent = (int)(((double)counter / maps.Count) * 100);
+        lbl_executionTime_normal_value.Text = percent + "%";
+        lbl_executionTime_normal_value.Refresh();
+      }
+      
+      foreach (var result in results)
+      {
+        using(var g = Graphics.FromImage(original))
+        {
+          g.DrawImage(result, 0, 0);
+        }
+      }
+
+      pictureBox1.Image = original;
+    }
+
+    public static Bitmap GetRepaintedBuffer(Bitmap buffer, int startY, int endY, Color oldColor, Color newColor)
+    {
+      var width = buffer.Width;
+      var height = buffer.Height;
+
+      var repainted = new Bitmap(width, height);
+
+      for (var y = startY; y < endY; y++)
+      {
+        for (var x = 0; x < width; x++)
+        {
+          var pixel = buffer.GetPixel(x, y);
+          if (pixel.R != oldColor.R || pixel.G != oldColor.G || pixel.B != oldColor.B)
+          {
+            continue;
+          }
+          else
+          {
+            repainted.SetPixel(x, y, newColor);
+          }
+        }
+      }
+      return repainted;
     }
   }
 }
