@@ -52,6 +52,8 @@ namespace TryThreading
       Cursor.Current = DefaultCursor;
 
       lbl_executionTime_normal_value.Text = watch.ElapsedMilliseconds + " ms";
+      
+      UpdateSpeedDiffLabel();
     }
 
     private void btn_threaded_Click(object sender, EventArgs e)
@@ -71,6 +73,8 @@ namespace TryThreading
       Cursor.Current = DefaultCursor;
 
       lbl_executionTime_threaded_value.Text = watch.ElapsedMilliseconds + " ms";
+
+      UpdateSpeedDiffLabel();
     }
 
     private void PerformUpdates_Normal()
@@ -167,6 +171,23 @@ namespace TryThreading
       {
         MessageBox.Show("Could not reset image.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
+    }
+
+    private void UpdateSpeedDiffLabel()
+    {
+      if (lbl_executionTime_normal_value == lbl_executionTime_threaded_value)
+      {
+        return;
+      }
+      if (lbl_executionTime_normal_value.Text == "-" || lbl_executionTime_threaded_value.Text == "-")
+      {
+        return;
+      }
+      
+      var speedNormal = double.Parse(lbl_executionTime_normal_value.Text.Substring(0, lbl_executionTime_normal_value.Text.IndexOf("ms")).Trim());
+      var speedThreaded = double.Parse(lbl_executionTime_threaded_value.Text.Substring(0, lbl_executionTime_threaded_value.Text.IndexOf("ms")).Trim());;
+      var diff = (1 - (speedThreaded / speedNormal)) * 100;
+      lbl_diff_value.Text = Math.Round(diff, 4) + "%";
     }
   }
 }

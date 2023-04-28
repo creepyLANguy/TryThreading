@@ -37,6 +37,8 @@
       this.lbl_executionTime_normal_value = new System.Windows.Forms.Label();
       this.lbl_executionTime_threaded_value = new System.Windows.Forms.Label();
       this.btn_reset = new System.Windows.Forms.Button();
+      this.lbl_diff = new System.Windows.Forms.Label();
+      this.lbl_diff_value = new System.Windows.Forms.Label();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
       this.SuspendLayout();
       // 
@@ -48,20 +50,19 @@
       this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
       this.pictureBox1.Location = new System.Drawing.Point(12, 12);
       this.pictureBox1.Name = "pictureBox1";
-      this.pictureBox1.Size = new System.Drawing.Size(798, 598);
+      this.pictureBox1.Size = new System.Drawing.Size(470, 354);
       this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
       this.pictureBox1.TabIndex = 0;
       this.pictureBox1.TabStop = false;
       // 
       // btn_normal
       // 
-      this.btn_normal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+      this.btn_normal.Anchor = System.Windows.Forms.AnchorStyles.Top;
       this.btn_normal.BackColor = System.Drawing.Color.AliceBlue;
       this.btn_normal.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.btn_normal.Location = new System.Drawing.Point(12, 616);
+      this.btn_normal.Location = new System.Drawing.Point(12, 382);
       this.btn_normal.Name = "btn_normal";
-      this.btn_normal.Size = new System.Drawing.Size(798, 62);
+      this.btn_normal.Size = new System.Drawing.Size(470, 62);
       this.btn_normal.TabIndex = 1;
       this.btn_normal.Text = "Normal";
       this.btn_normal.UseVisualStyleBackColor = false;
@@ -69,13 +70,12 @@
       // 
       // btn_threaded
       // 
-      this.btn_threaded.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+      this.btn_threaded.Anchor = System.Windows.Forms.AnchorStyles.Top;
       this.btn_threaded.BackColor = System.Drawing.Color.Honeydew;
       this.btn_threaded.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.btn_threaded.Location = new System.Drawing.Point(12, 684);
+      this.btn_threaded.Location = new System.Drawing.Point(12, 466);
       this.btn_threaded.Name = "btn_threaded";
-      this.btn_threaded.Size = new System.Drawing.Size(798, 62);
+      this.btn_threaded.Size = new System.Drawing.Size(470, 62);
       this.btn_threaded.TabIndex = 2;
       this.btn_threaded.Text = "Threaded";
       this.btn_threaded.UseVisualStyleBackColor = false;
@@ -83,12 +83,11 @@
       // 
       // lbl_executionTime_normal
       // 
-      this.lbl_executionTime_normal.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+      this.lbl_executionTime_normal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.lbl_executionTime_normal.AutoSize = true;
       this.lbl_executionTime_normal.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.lbl_executionTime_normal.Location = new System.Drawing.Point(6, 779);
+      this.lbl_executionTime_normal.Location = new System.Drawing.Point(6, 550);
       this.lbl_executionTime_normal.Name = "lbl_executionTime_normal";
       this.lbl_executionTime_normal.Size = new System.Drawing.Size(324, 31);
       this.lbl_executionTime_normal.TabIndex = 3;
@@ -96,12 +95,11 @@
       // 
       // lbl_lastExecution_threaded
       // 
-      this.lbl_lastExecution_threaded.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+      this.lbl_lastExecution_threaded.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.lbl_lastExecution_threaded.AutoSize = true;
       this.lbl_lastExecution_threaded.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.lbl_lastExecution_threaded.Location = new System.Drawing.Point(6, 845);
+      this.lbl_lastExecution_threaded.Location = new System.Drawing.Point(6, 616);
       this.lbl_lastExecution_threaded.Name = "lbl_lastExecution_threaded";
       this.lbl_lastExecution_threaded.Size = new System.Drawing.Size(353, 31);
       this.lbl_lastExecution_threaded.TabIndex = 4;
@@ -109,12 +107,11 @@
       // 
       // lbl_executionTime_normal_value
       // 
-      this.lbl_executionTime_normal_value.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+      this.lbl_executionTime_normal_value.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.lbl_executionTime_normal_value.AutoSize = true;
       this.lbl_executionTime_normal_value.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.lbl_executionTime_normal_value.Location = new System.Drawing.Point(365, 779);
+      this.lbl_executionTime_normal_value.Location = new System.Drawing.Point(365, 550);
       this.lbl_executionTime_normal_value.Name = "lbl_executionTime_normal_value";
       this.lbl_executionTime_normal_value.Size = new System.Drawing.Size(23, 31);
       this.lbl_executionTime_normal_value.TabIndex = 5;
@@ -122,12 +119,11 @@
       // 
       // lbl_executionTime_threaded_value
       // 
-      this.lbl_executionTime_threaded_value.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+      this.lbl_executionTime_threaded_value.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.lbl_executionTime_threaded_value.AutoSize = true;
       this.lbl_executionTime_threaded_value.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.lbl_executionTime_threaded_value.Location = new System.Drawing.Point(365, 845);
+      this.lbl_executionTime_threaded_value.Location = new System.Drawing.Point(365, 616);
       this.lbl_executionTime_threaded_value.Name = "lbl_executionTime_threaded_value";
       this.lbl_executionTime_threaded_value.Size = new System.Drawing.Size(23, 31);
       this.lbl_executionTime_threaded_value.TabIndex = 6;
@@ -135,8 +131,9 @@
       // 
       // btn_reset
       // 
+      this.btn_reset.Anchor = System.Windows.Forms.AnchorStyles.Top;
       this.btn_reset.Font = new System.Drawing.Font("Microsoft Sans Serif", 40F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.btn_reset.Location = new System.Drawing.Point(730, 530);
+      this.btn_reset.Location = new System.Drawing.Point(402, 286);
       this.btn_reset.Name = "btn_reset";
       this.btn_reset.Size = new System.Drawing.Size(80, 80);
       this.btn_reset.TabIndex = 7;
@@ -144,14 +141,40 @@
       this.btn_reset.UseVisualStyleBackColor = false;
       this.btn_reset.Click += new System.EventHandler(this.btn_reset_Click);
       // 
+      // lbl_diff
+      // 
+      this.lbl_diff.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.lbl_diff.AutoSize = true;
+      this.lbl_diff.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.lbl_diff.Location = new System.Drawing.Point(6, 682);
+      this.lbl_diff.Name = "lbl_diff";
+      this.lbl_diff.Size = new System.Drawing.Size(272, 31);
+      this.lbl_diff.TabIndex = 4;
+      this.lbl_diff.Text = "Speed Improvement :";
+      // 
+      // lbl_diff_value
+      // 
+      this.lbl_diff_value.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.lbl_diff_value.AutoSize = true;
+      this.lbl_diff_value.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.lbl_diff_value.Location = new System.Drawing.Point(365, 682);
+      this.lbl_diff_value.Name = "lbl_diff_value";
+      this.lbl_diff_value.Size = new System.Drawing.Size(23, 31);
+      this.lbl_diff_value.TabIndex = 6;
+      this.lbl_diff_value.Text = "-";
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(822, 899);
+      this.ClientSize = new System.Drawing.Size(494, 743);
       this.Controls.Add(this.btn_reset);
+      this.Controls.Add(this.lbl_diff_value);
       this.Controls.Add(this.lbl_executionTime_threaded_value);
       this.Controls.Add(this.lbl_executionTime_normal_value);
+      this.Controls.Add(this.lbl_diff);
       this.Controls.Add(this.lbl_lastExecution_threaded);
       this.Controls.Add(this.lbl_executionTime_normal);
       this.Controls.Add(this.btn_threaded);
@@ -178,6 +201,8 @@
     private System.Windows.Forms.Label lbl_executionTime_normal_value;
     private System.Windows.Forms.Label lbl_executionTime_threaded_value;
     private System.Windows.Forms.Button btn_reset;
+    private System.Windows.Forms.Label lbl_diff;
+    private System.Windows.Forms.Label lbl_diff_value;
   }
 }
 
