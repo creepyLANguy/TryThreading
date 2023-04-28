@@ -92,24 +92,11 @@ namespace TryThreading
         lbl_executionTime_normal_value.Refresh();
       }
 
-      foreach (var result in repaintedBuffers)
-      {
-        using (var g = Graphics.FromImage(original))
-        {
-          g.DrawImage(result, 0, 0);
-        }
-      }
-
-      pictureBox1.Image = original;
+      DrawRepaintedBuffersToPictureBox();
     }
 
     private void PerformUpdates_Threaded()
     {
-      //AL.
-      //TODO - actually make this threaded. 
-
-      var original = new Bitmap(pictureBox1.Image);
-
       var counter = 0;
       foreach (var map in maps)
       {
@@ -120,19 +107,26 @@ namespace TryThreading
         lbl_executionTime_threaded_value.Text = percent + "%";
         lbl_executionTime_threaded_value.Refresh();
       }
-      
+
+      DrawRepaintedBuffersToPictureBox();  
+    }
+
+    private void DrawRepaintedBuffersToPictureBox()
+    {
+      var canvas = new Bitmap(cachedImage);
+
       foreach (var result in repaintedBuffers)
       {
-        using (var g = Graphics.FromImage(original))
+        using (var g = Graphics.FromImage(canvas))
         {
           g.DrawImage(result, 0, 0);
         }
       }
 
-      pictureBox1.Image = original;
+      pictureBox1.Image = canvas;
     }
 
-    public void GenerateRepaintedBuffer(Color oldColor, Color newColor)
+    private void GenerateRepaintedBuffer(Color oldColor, Color newColor)
     {
       //AL.
       //TODO - try without lock in case reads are fine when threaded
@@ -164,6 +158,8 @@ namespace TryThreading
         repaintedBuffers.Add(repainted);
       }      
     }
+
+    
 
     private void ResetImage()
     {
