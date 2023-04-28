@@ -79,8 +79,6 @@ namespace TryThreading
 
     private void PerformUpdates_Normal()
     {
-      var original = new Bitmap(pictureBox1.Image);
-
       var counter = 0;
       foreach (var map in maps)
       {
@@ -96,19 +94,15 @@ namespace TryThreading
     }
 
     private void PerformUpdates_Threaded()
-    {
-      var counter = 0;
+    { 
+      //AL.
+      //TODO - once threading is working, find a way to indicate progress. 
       foreach (var map in maps)
       {
-        GenerateRepaintedBuffer(map.Key, map.Value);
-
-        ++counter;
-        var percent = (int)(((double)counter / maps.Count) * 100);
-        lbl_executionTime_threaded_value.Text = percent + "%";
-        lbl_executionTime_threaded_value.Refresh();
+        GenerateRepaintedBuffer(map.Key, map.Value);        
       }
 
-      DrawRepaintedBuffersToPictureBox();  
+      DrawRepaintedBuffersToPictureBox();
     }
 
     private void DrawRepaintedBuffersToPictureBox()
