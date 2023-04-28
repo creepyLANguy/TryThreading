@@ -32,19 +32,14 @@ namespace TryThreading
 
     private void btn_reset_Click(object sender, EventArgs e)
     {
-      if (cachedImage != null)
-      {
-        pictureBox1.Image = cachedImage;
-      }
-      else
-      {
-        MessageBox.Show("Could not reset image.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-      }
+      ResetImage();
     }
 
     private void btn_normal_Click(object sender, EventArgs e)
     {
       Cursor.Current = Cursors.WaitCursor;
+
+      ResetImage();
 
       var watch = new System.Diagnostics.Stopwatch();
       watch.Start();
@@ -60,6 +55,8 @@ namespace TryThreading
     private void btn_threaded_Click(object sender, EventArgs e)
     {
       Cursor.Current = Cursors.WaitCursor;
+      
+      ResetImage();
 
       var watch = new System.Diagnostics.Stopwatch();
       watch.Start();
@@ -165,6 +162,19 @@ namespace TryThreading
       }
 
       repaintedBuffers.Add(repainted);
+    }
+
+    private void ResetImage()
+    {
+      if (cachedImage != null)
+      {
+        pictureBox1.Image = cachedImage;
+        pictureBox1.Refresh();
+      }
+      else
+      {
+        MessageBox.Show("Could not reset image.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
     }
   }
 }
