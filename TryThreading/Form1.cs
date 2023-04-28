@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TryThreading
@@ -56,7 +57,7 @@ namespace TryThreading
       UpdateSpeedDiffLabel();
     }
 
-    private void btn_threaded_Click(object sender, EventArgs e)
+    private async void btn_threaded_Click(object sender, EventArgs e)
     {
       Cursor.Current = Cursors.WaitCursor;
       
@@ -67,7 +68,7 @@ namespace TryThreading
       var watch = new System.Diagnostics.Stopwatch();
       watch.Start();
 
-      PerformUpdates_Threaded();
+      await PerformUpdates_ThreadedAsync();
 
       watch.Stop();
       Cursor.Current = DefaultCursor;
@@ -93,14 +94,18 @@ namespace TryThreading
       DrawRepaintedBuffersToPictureBox();
     }
 
-    private void PerformUpdates_Threaded()
-    { 
+    private async Task PerformUpdates_ThreadedAsync()
+    {
+      List<Task> tasks = new List<Task>();
+
       //AL.
       //TODO - once threading is working, find a way to indicate progress. 
       foreach (var map in maps)
       {
-        GenerateRepaintedBuffer(map.Key, map.Value);        
+        tasks.Add(Task.Run(() => GenerateRepaintedBuffer(map.Key, map.Value)));
       }
+
+      await Task.WhenAll(tasks);
 
       DrawRepaintedBuffersToPictureBox();
     }
@@ -122,8 +127,6 @@ namespace TryThreading
 
     private void GenerateRepaintedBuffer(Color oldColor, Color newColor)
     {
-      //AL.
-      //TODO - try without lock in case reads are fine when threaded
       Bitmap original = null;
       lock (pictureBox1.Image)
       {
@@ -182,7 +185,7 @@ namespace TryThreading
       var speedNormal = double.Parse(lbl_executionTime_normal_value.Text.Substring(0, lbl_executionTime_normal_value.Text.IndexOf("ms")).Trim());
       var speedThreaded = double.Parse(lbl_executionTime_threaded_value.Text.Substring(0, lbl_executionTime_threaded_value.Text.IndexOf("ms")).Trim());;
       var diff = (1 - (speedThreaded / speedNormal)) * 100;
-      lbl_diff_value.Text = Math.Round(diff, 4) + "%";
+      lbl_diff_value.Text = Math.Round(diff, 2) + "%";
     }
   }
 }
