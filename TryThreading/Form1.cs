@@ -83,7 +83,7 @@ namespace TryThreading
       var counter = 0;
       foreach (var map in maps)
       {
-        GenerateRepaintedBuffer(map.Key, map.Value);
+        GenerateRepaintedBuffer(map);
 
         ++counter;
         var percent = (int)(((double)counter / maps.Count) * 100);
@@ -100,7 +100,7 @@ namespace TryThreading
 
       foreach (var map in maps)
       {
-        tasks.Add(Task.Run(() => GenerateRepaintedBuffer(map.Key, map.Value)));
+        tasks.Add(Task.Run(() => GenerateRepaintedBuffer(map)));
       }
 
       await Task.WhenAll(tasks);
@@ -123,12 +123,15 @@ namespace TryThreading
       pictureBox1.Image = canvas;
     }
 
-    private void GenerateRepaintedBuffer(Color oldColor, Color newColor)
+    private void GenerateRepaintedBuffer(KeyValuePair<Color, Color> map)
     {
+      var oldColor = map.Key;
+      var newColor = map.Value;
+
       Bitmap original = null;
-      lock (pictureBox1.Image)
+      lock (cachedImage)
       {
-        original = new Bitmap(pictureBox1.Image);        
+        original = new Bitmap(cachedImage);
       }
 
       var repainted = new Bitmap(original.Width, original.Height);
