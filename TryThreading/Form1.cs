@@ -40,6 +40,8 @@ namespace TryThreading
       Cursor.Current = Cursors.WaitCursor;
 
       ResetImage();
+      
+      repaintedBuffers.Clear();
 
       var watch = new System.Diagnostics.Stopwatch();
       watch.Start();
@@ -57,6 +59,8 @@ namespace TryThreading
       Cursor.Current = Cursors.WaitCursor;
       
       ResetImage();
+      
+      repaintedBuffers.Clear();
 
       var watch = new System.Diagnostics.Stopwatch();
       watch.Start();
@@ -72,12 +76,11 @@ namespace TryThreading
     private void PerformUpdates_Normal()
     {
       var original = new Bitmap(pictureBox1.Image);
-      var buffer = new Bitmap(pictureBox1.Image);
 
       var counter = 0;
       foreach (var map in maps)
       {
-        UpdateBuffer(original, ref buffer, map);
+        GenerateRepaintedBuffer(original, 0, original.Height, map.Key, map.Value);
 
         ++counter;
         var percent = (int)(((double)counter / maps.Count) * 100);
@@ -85,28 +88,15 @@ namespace TryThreading
         lbl_executionTime_normal_value.Refresh();
       }
 
-      pictureBox1.Image = buffer;
-    }
-
-    private void UpdateBuffer(Bitmap original, ref Bitmap buffer, KeyValuePair<Color, Color> map)
-    {
-      for (var x = 0; x < buffer.Width; x++)
+      foreach (var result in repaintedBuffers)
       {
-        for (var y = 0; y < buffer.Height; y++)
+        using (var g = Graphics.FromImage(original))
         {
-          var px = original.GetPixel(x, y);
-          if ((px.R != map.Key.R) ||
-              (px.G != map.Key.G) ||
-              (px.B != map.Key.B))
-          {
-            continue;
-          }
-          else
-          {
-            buffer.SetPixel(x, y, map.Value);
-          }
+          g.DrawImage(result, 0, 0);
         }
       }
+
+      pictureBox1.Image = original;
     }
 
     private void PerformUpdates_Threaded()
@@ -129,7 +119,7 @@ namespace TryThreading
       
       foreach (var result in repaintedBuffers)
       {
-        using(var g = Graphics.FromImage(original))
+        using (var g = Graphics.FromImage(original))
         {
           g.DrawImage(result, 0, 0);
         }
@@ -160,8 +150,10 @@ namespace TryThreading
           }
         }
       }
-
-      repaintedBuffers.Add(repainted);
+      lock (repaintedBuffers)
+      {
+        repaintedBuffers.Add(repainted);
+      }      
     }
 
     private void ResetImage()
