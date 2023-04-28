@@ -84,7 +84,7 @@ namespace TryThreading
       var counter = 0;
       foreach (var map in maps)
       {
-        GenerateRepaintedBuffer(original, 0, original.Height, map.Key, map.Value);
+        GenerateRepaintedBuffer(map.Key, map.Value);
 
         ++counter;
         var percent = (int)(((double)counter / maps.Count) * 100);
@@ -108,12 +108,12 @@ namespace TryThreading
       //AL.
       //TODO - actually make this threaded. 
 
-      var original = new Bitmap(pictureBox1.Image);     
+      var original = new Bitmap(pictureBox1.Image);
 
       var counter = 0;
       foreach (var map in maps)
       {
-        GenerateRepaintedBuffer(original, 0, original.Height, map.Key, map.Value);
+        GenerateRepaintedBuffer(map.Key, map.Value);
 
         ++counter;
         var percent = (int)(((double)counter / maps.Count) * 100);
@@ -132,18 +132,23 @@ namespace TryThreading
       pictureBox1.Image = original;
     }
 
-    public static void GenerateRepaintedBuffer(Bitmap buffer, int startY, int endY, Color oldColor, Color newColor)
+    public void GenerateRepaintedBuffer(Color oldColor, Color newColor)
     {
-      var width = buffer.Width;
-      var height = buffer.Height;
-
-      var repainted = new Bitmap(width, height);
-
-      for (var y = startY; y < endY; y++)
+      //AL.
+      //TODO - try without lock in case reads are fine when threaded
+      Bitmap original = null;
+      lock (pictureBox1.Image)
       {
-        for (var x = 0; x < width; x++)
+        original = new Bitmap(pictureBox1.Image);        
+      }
+
+      var repainted = new Bitmap(original.Width, original.Height);
+
+      for (var y = 0; y < original.Height; y++)
+      {
+        for (var x = 0; x < original.Width; x++)
         {
-          var pixel = buffer.GetPixel(x, y);
+          var pixel = original.GetPixel(x, y);
           if (pixel.R != oldColor.R || pixel.G != oldColor.G || pixel.B != oldColor.B)
           {
             continue;
